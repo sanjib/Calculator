@@ -95,10 +95,6 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fSy-vf-9nH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sGq-Io-XKt">
-                                <rect key="frame" x="28" y="468.5" width="102.5" height="123.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s9F-CH-myg">
                                 <rect key="frame" x="138.5" y="468.5" width="102.5" height="123.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -174,6 +170,14 @@
                                 <state key="normal" title="√"/>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bTu-ah-0cM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sGq-Io-XKt">
+                                <rect key="frame" x="28" y="468" width="102.5" height="123.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="."/>
+                                <connections>
+                                    <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E6h-se-WqP"/>
                                 </connections>
                             </button>
                         </subviews>

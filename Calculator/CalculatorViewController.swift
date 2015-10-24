@@ -15,13 +15,14 @@ class CalculatorViewController: UIViewController {
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
-            display.text = display.text! + digit
+            if (digit != ".") || (digit == "." && display.text!.rangeOfString(".") == nil) {
+                display.text = display.text! + digit
+            }
         } else {
             display.text = digit
             userIsInTheMiddleOfTypingANumber = true
         }
     }
-    
     
     @IBAction func operate(sender: UIButton) {
         let operation = sender.currentTitle!
