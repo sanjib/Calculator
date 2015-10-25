@@ -10,9 +10,9 @@ import UIKit
 
 class CalculatorViewController: UIViewController {
     @IBOutlet weak var display: UILabel!
-    var userIsInTheMiddleOfTypingANumber = false
     @IBOutlet weak var history: UILabel!
     
+    var userIsInTheMiddleOfTypingANumber = false
     private let defaultDisplayText = "0"
 
     @IBAction func clear() {
@@ -20,8 +20,7 @@ class CalculatorViewController: UIViewController {
         userIsInTheMiddleOfTypingANumber = false
         display.text = defaultDisplayText
         history.text = " "
-    }
-    
+    }    
 
     @IBAction func backspace(sender: UIButton) {
         appendHistory(" \(sender.currentTitle!) ")
@@ -48,6 +47,10 @@ class CalculatorViewController: UIViewController {
     }
     
     private func appendHistory(value: String) {
+        // Remove the last " = "
+        if (value != " = ") && (history.text!.rangeOfString(" = ") != nil) {
+            history.text = history.text!.stringByReplacingOccurrencesOfString(" = ", withString: "")
+        }
         history.text = history.text! + value
     }
     
@@ -57,6 +60,7 @@ class CalculatorViewController: UIViewController {
             enter()
         }
         appendHistory(" \(operation) ")
+        appendHistory(" = ")
         switch operation {
         case "×": performOperation { $0 * $1 }
         case "÷": performOperation { $1 / $0 }
