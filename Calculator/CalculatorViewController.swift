@@ -12,12 +12,25 @@ class CalculatorViewController: UIViewController {
     @IBOutlet weak var display: UILabel!
     var userIsInTheMiddleOfTypingANumber = false
     @IBOutlet weak var history: UILabel!
+    
+    private let defaultDisplayText = "0"
 
     @IBAction func clear() {
         operandStack = [Double]()
         userIsInTheMiddleOfTypingANumber = false
-        display.text = "0"
+        display.text = defaultDisplayText
         history.text = " "
+    }
+    
+
+    @IBAction func backspace(sender: UIButton) {
+        appendHistory(" \(sender.currentTitle!) ")
+        if display.text!.characters.count > 1 {
+            display.text = String(display.text!.characters.dropLast())
+        } else {
+            userIsInTheMiddleOfTypingANumber = false
+            display.text = defaultDisplayText
+        }
     }
     
     @IBAction func appendDigit(sender: UIButton) {
@@ -80,8 +93,11 @@ class CalculatorViewController: UIViewController {
         set {
             display.text = "\(newValue)"
         }
-    }    
+    }
 
+    // Overload the enter function for user input, because we want add to add it the history. The enter
+    // function is also called from other places in the code where we don't want to add to history.
+    
     @IBAction func enter(sender: UIButton) {
         appendHistory(" ⏎ ")
         enter()
