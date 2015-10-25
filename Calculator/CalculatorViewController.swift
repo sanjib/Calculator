@@ -34,7 +34,9 @@ class CalculatorViewController: UIViewController {
     
     @IBAction func changeSign() {
         if userIsInTheMiddleOfTypingANumber {
-            display.text =  "\(displayValue * -1)"
+            if displayValue != nil {
+                display.text =  "\(displayValue! * -1)"
+            }
         } else {
             appendHistory(" ᐩ/- ")
             performOperation { -$0 }
@@ -98,12 +100,20 @@ class CalculatorViewController: UIViewController {
     
     var operandStack = [Double]()
     
-    var displayValue: Double {
+    var displayValue: Double? {
         get {
-            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+            if let displayValue = NSNumberFormatter().numberFromString(display.text!) {
+                return displayValue.doubleValue
+            } else {
+                return nil
+            }
         }
         set {
-            display.text = "\(newValue)"
+            if newValue != nil {
+                display.text = "\(newValue!)"
+            } else {
+                display.text = defaultDisplayText
+            }
         }
     }
 
@@ -118,8 +128,10 @@ class CalculatorViewController: UIViewController {
     
     private func enter() {
         userIsInTheMiddleOfTypingANumber = false
-        operandStack.append(displayValue)
-        print("operandStack = \(operandStack)")
+        if displayValue != nil {
+            operandStack.append(displayValue!)
+            print("operandStack = \(operandStack)")
+        }
     }
 
 }
