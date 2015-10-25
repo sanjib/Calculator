@@ -11,17 +11,31 @@ import UIKit
 class CalculatorViewController: UIViewController {
     @IBOutlet weak var display: UILabel!
     var userIsInTheMiddleOfTypingANumber = false
+    @IBOutlet weak var history: UILabel!
 
+    @IBAction func clear() {
+        operandStack = [Double]()
+        userIsInTheMiddleOfTypingANumber = false
+        display.text = "0"
+        history.text = " "
+    }
+    
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
             if (digit != ".") || (digit == "." && display.text!.rangeOfString(".") == nil) {
                 display.text = display.text! + digit
+                appendHistory(digit)
             }
         } else {
             display.text = digit
+            appendHistory(digit)
             userIsInTheMiddleOfTypingANumber = true
         }
+    }
+    
+    private func appendHistory(value: String) {
+        history.text = history.text! + value
     }
     
     @IBAction func operate(sender: UIButton) {
@@ -29,6 +43,7 @@ class CalculatorViewController: UIViewController {
         if userIsInTheMiddleOfTypingANumber {
             enter()
         }
+        appendHistory(" \(operation) ")
         switch operation {
         case "×": performOperation { $0 * $1 }
         case "÷": performOperation { $1 / $0 }
@@ -65,9 +80,14 @@ class CalculatorViewController: UIViewController {
         set {
             display.text = "\(newValue)"
         }
+    }    
+
+    @IBAction func enter(sender: UIButton) {
+        appendHistory(" ⏎ ")
+        enter()
     }
     
-    @IBAction func enter() {
+    private func enter() {
         userIsInTheMiddleOfTypingANumber = false
         operandStack.append(displayValue)
         print("operandStack = \(operandStack)")
