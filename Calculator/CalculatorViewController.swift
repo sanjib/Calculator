@@ -20,7 +20,7 @@ class CalculatorViewController: UIViewController {
         userIsInTheMiddleOfTypingANumber = false
         display.text = defaultDisplayText
         history.text = " "
-    }    
+    }
 
     @IBAction func backspace(sender: UIButton) {
         appendHistory(" \(sender.currentTitle!) ")
@@ -32,16 +32,23 @@ class CalculatorViewController: UIViewController {
         }
     }
     
+    @IBAction func changeSign() {
+        if userIsInTheMiddleOfTypingANumber {
+            display.text =  "\(displayValue * -1)"
+        } else {
+            appendHistory(" ᐩ/- ")
+            performOperation { -$0 }
+        }
+    }
+    
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
             if (digit != ".") || (digit == "." && display.text!.rangeOfString(".") == nil) {
                 display.text = display.text! + digit
-                appendHistory(digit)
             }
         } else {
             display.text = digit
-            appendHistory(digit)
             userIsInTheMiddleOfTypingANumber = true
         }
     }
@@ -57,6 +64,7 @@ class CalculatorViewController: UIViewController {
     @IBAction func operate(sender: UIButton) {
         let operation = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
+            appendHistory(display.text!)
             enter()
         }
         appendHistory(" \(operation) ")
@@ -103,6 +111,7 @@ class CalculatorViewController: UIViewController {
     // function is also called from other places in the code where we don't want to add to history.
     
     @IBAction func enter(sender: UIButton) {
+        appendHistory(display.text!)
         appendHistory(" ⏎ ")
         enter()
     }
