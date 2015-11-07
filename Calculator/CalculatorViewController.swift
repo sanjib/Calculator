@@ -46,7 +46,7 @@ class CalculatorViewController: UIViewController {
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
-            if (digit != ".") || (digit == "." && display.text!.rangeOfString(".") == nil) {
+            if digit != "." || display.text!.rangeOfString(".") == nil {
                 display.text = display.text! + digit
             }
         } else {
